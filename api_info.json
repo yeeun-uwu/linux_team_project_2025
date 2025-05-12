@@ -1,0 +1,21 @@
+{
+
+    "url_endpoint" : {
+        "초단기실황조회" : "getUltraSrtNcst",
+        "초단기예보보조회" : "getUltraSrtFcst",
+        "단기예보조회" : "getVilageFcst",
+        "예보버전조회" : "getFcstVersion",
+        "중기전망조회" : "getMidFcst",
+        "중기육상예보조회" : "getMidLandFcst",
+        "중기기온조회" : "getMidTa",
+        "중기해상예보조회" : "getMidSeaFcst"
+    },
+
+    "base_time" : {
+        "단기예보조회" : "0500",
+        "중기전망조회" : ["0600", "1800"],
+        "중기육상예보조회" : ["0600", "1800"],
+        "중기기온조회" : ["0600", "1800"],
+        "중기해상예보조회" : ["0600", "1800"]
+    }
+}
