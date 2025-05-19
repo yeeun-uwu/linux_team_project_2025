@@ -36,6 +36,7 @@ print(tc.Mid_time(time))
 '''
 
 Vil_url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/'
+Mid_url = 'http://apis.data.go.kr/1360000/MidFcstInfoService'
 
 Vil_params ={'serviceKey' : api_key['dec'], 
          'pageNo' : '1', 
