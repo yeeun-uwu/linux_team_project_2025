@@ -1,4 +1,4 @@
 ## 예외처리할 파일을 여기 추가하면 push할 때 자동으로 제외됨
 ## 로그파일이나 api key 파일등을 여기 추가하면 됨 
 
-api_key.json
+flask-server/api_key.json
