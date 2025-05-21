@@ -1,3 +1,18 @@
+import React from 'react';
+import './App.css'
+import Weather from './components/Weather'; // 경로 맞게
+
+function App() {
+  return (
+    <div className="App">
+      <Weather />
+    </div>
+  );
+}
+
+export default App;
+
+/*
 import './App.css'
 import { useEffect, useState } from 'react';
 
@@ -27,3 +42,4 @@ function App() {
 }
 
 export default App;
+*/
