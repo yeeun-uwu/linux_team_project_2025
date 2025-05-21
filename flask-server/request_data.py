@@ -4,16 +4,23 @@ import pandas as pd
 import requests
 import time_calc as tc
 
-# 키 파일 열고 저장
-# 개인키이기떄문에 테스트를 위해서는 각자 공공데이터포털에서 api 접근 요청 필요 
+''' 작동 안될때 경로 확인용'''
+'''
+import os
+print(os.getcwd())
+'''
 
-key_file = 'api_key.json'
+# 키 파일 열고 저장
+# 개인키이기때때문에 테스트를 위해서는 각자 공공데이터포털에서 api 접근 요청 필요 or 작성자에게 연락해서 key file 받기
+# 서버에는 key file 업로드해서 작동하면 됨  
+
+key_file = 'flask-server/api_key.json'
 with open(key_file) as f:
     api_key = json.load(f)
 api_key = api_key["key"]
 
 # api를 사용할 때 필요한 정보가 저장된 json 호출 
-url_file = 'api_info.json'
+url_file = 'flask-server/api_info.json'
 with open(url_file) as f:
     api_datas = json.load(f)
 api_url_endpoint = api_datas["url_endpoint"]
@@ -59,4 +66,3 @@ print(res)
 황사/미세먼지는 환경부 에어코리아 대기오염정보 api를 통해 예보등급을 확인하는게 편리할 것 같음.
 자외선지수는 기상청 생활기상지수 조회서비스 api를 통해 받아올 수 있음 
 '''
-
