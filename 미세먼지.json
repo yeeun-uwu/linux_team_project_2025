@@ -1,0 +1,24 @@
+{
+  "response": {
+    "body": {
+      "totalCount": 123,
+      "items": [
+        {
+          "issueTime": "2025-05-15 06:00",
+          "issueVal": "86",
+          "issueGbn": "주의보",
+          "itemCode": "PM10",
+          "informCode": "서울",
+          "informCause": "PM10 농도 상승",
+          "clearTime": "2025-05-15 12:00"
+        }
+      ],
+      "pageNo": 1,
+      "numOfRows": 100
+    },
+    "header": {
+      "resultMsg": "NORMAL_CODE",
+      "resultCode": "00"
+    }
+  }
+}

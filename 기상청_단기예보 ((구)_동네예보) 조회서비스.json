@@ -1,0 +1,11 @@
+﻿{
+  "precipitation_type": 0,
+  "humidity": 82,
+  "precipitation": 0.0,
+  "temperature_now": 12.3,
+  "datetime": "2025-05-19 06:00",
+  "location": {
+    "nx": 55,
+    "ny": 127
+  }
+}
