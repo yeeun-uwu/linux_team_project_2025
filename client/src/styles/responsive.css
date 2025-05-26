@@ -1,0 +1,21 @@
+@media (max-width: 480px) {
+  .card {
+    padding: 12px;
+    width: 100%;
+  }
+  .temperature {
+    font-size: 64px !important;
+  }
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+  .weather-wrapper {
+    padding: 12px;
+  }
+  .checklist-section h3 {
+    font-size: 16px;
+  }
+  .card h3 {
+    font-size: 16px;
+  }
+}
