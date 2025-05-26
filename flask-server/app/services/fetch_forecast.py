@@ -29,7 +29,7 @@ def fetch_forecast():
     params = {
         'serviceKey' : api_key["dec"],
         "pageNo" : "1",
-        'numOfRows' : "10",
+        'numOfRows' : "1000",
         "dataType": "json",
         'base_date' : time,
         'base_time' : '2300',
@@ -40,12 +40,13 @@ def fetch_forecast():
     # 요청 보내기
     response = requests.get(base_url, params=params)
     data = response.json()
-    items  = data["response"]["body"]["items"]
+    items  = data["response"]["body"]["items"]["item"]
+    daily = [a for a in items if a["fcstDate"] == now.strftime("%Y%m%d")] 
 
     # 응답 상태 확인
     if response.status_code == 200:
         with open(BASE_DIR+"/data/forecast.json", "w", encoding="utf-8") as f:
-            json.dump(items, f, ensure_ascii= False, indent=2)
+            json.dump(daily, f, ensure_ascii= False, indent=2)
         
         logger.info(f"{time} 23시 단기예보 저장 완료")
         return True
