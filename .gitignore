@@ -2,3 +2,4 @@
 ## 로그파일이나 api key 파일등을 여기 추가하면 됨 
 
 flask-server/api_key.json
+flask-server/log/*

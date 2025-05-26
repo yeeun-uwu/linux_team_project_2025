@@ -1,0 +1,104 @@
+{
+  "item": [
+    {
+      "baseDate": "20250525",
+      "baseTime": "2300",
+      "category": "TMP",
+      "fcstDate": "20250526",
+      "fcstTime": "0000",
+      "fcstValue": "16",
+      "nx": 59,
+      "ny": 126
+    },
+    {
+      "baseDate": "20250525",
+      "baseTime": "2300",
+      "category": "UUU",
+      "fcstDate": "20250526",
+      "fcstTime": "0000",
+      "fcstValue": "0.7",
+      "nx": 59,
+      "ny": 126
+    },
+    {
+      "baseDate": "20250525",
+      "baseTime": "2300",
+      "category": "VVV",
+      "fcstDate": "20250526",
+      "fcstTime": "0000",
+      "fcstValue": "0.3",
+      "nx": 59,
+      "ny": 126
+    },
+    {
+      "baseDate": "20250525",
+      "baseTime": "2300",
+      "category": "VEC",
+      "fcstDate": "20250526",
+      "fcstTime": "0000",
+      "fcstValue": "249",
+      "nx": 59,
+      "ny": 126
+    },
+    {
+      "baseDate": "20250525",
+      "baseTime": "2300",
+      "category": "WSD",
+      "fcstDate": "20250526",
+      "fcstTime": "0000",
+      "fcstValue": "0.8",
+      "nx": 59,
+      "ny": 126
+    },
+    {
+      "baseDate": "20250525",
+      "baseTime": "2300",
+      "category": "SKY",
+      "fcstDate": "20250526",
+      "fcstTime": "0000",
+      "fcstValue": "1",
+      "nx": 59,
+      "ny": 126
+    },
+    {
+      "baseDate": "20250525",
+      "baseTime": "2300",
+      "category": "PTY",
+      "fcstDate": "20250526",
+      "fcstTime": "0000",
+      "fcstValue": "0",
+      "nx": 59,
+      "ny": 126
+    },
+    {
+      "baseDate": "20250525",
+      "baseTime": "2300",
+      "category": "POP",
+      "fcstDate": "20250526",
+      "fcstTime": "0000",
+      "fcstValue": "0",
+      "nx": 59,
+      "ny": 126
+    },
+    {
+      "baseDate": "20250525",
+      "baseTime": "2300",
+      "category": "WAV",
+      "fcstDate": "20250526",
+      "fcstTime": "0000",
+      "fcstValue": "-999",
+      "nx": 59,
+      "ny": 126
+    },
+    {
+      "baseDate": "20250525",
+      "baseTime": "2300",
+      "category": "PCP",
+      "fcstDate": "20250526",
+      "fcstTime": "0000",
+      "fcstValue": "강수없음",
+      "nx": 59,
+      "ny": 126
+    }
+  ]
+}
