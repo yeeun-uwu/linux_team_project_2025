@@ -1,113 +1,86 @@
+// Weather.jsx - 이화여대 위치 수정: 기온 바로 위로
 import React, { useEffect, useState } from 'react';
-import './Weather.css';
+import DustCard from './cards/DustCard';
+import UVCard from './cards/UVCard';
+import ItemCard from './cards/ItemCard';
+import RainCard from './cards/RainCard';
+import Checklist from './cards/Checklist';
+import ShuttleCard from './cards/ShuttleCard';
+import Popup from './cards/Popup';
+import '../styles/Weather.css';
 
 const Weather = () => {
   const [data, setData] = useState(null);
+  const [popup, setPopup] = useState({ visible: false, title: '', contents: [] });
+
+  const openPopup = (title, contents) => {
+    setPopup({ visible: true, title, contents });
+  };
+
+  const closePopup = () => {
+    setPopup({ ...popup, visible: false });
+  };
 
   useEffect(() => {
-    fetch('/data/weatherData.json')
-      .then(res => res.json())
-      .then(setData);
+    Promise.all([
+      fetch('/data/미세먼지.json').then(res => res.json()),
+      fetch('/data/미세먼지기준.json').then(res => res.json()),
+      fetch('/data/자외선지수.json').then(res => res.json()),
+      fetch('/data/자외선기준.json').then(res => res.json()), // ✅ 추가
+      fetch('/data/공구템.json').then(res => res.json()),
+      fetch('/data/양산.json').then(res => res.json()),
+      fetch('/data/빗길.json').then(res => res.json()),
+      fetch('/data/대피소.json').then(res => res.json()),
+      fetch('/data/링크.json').then(res => res.json())
+    ]).then(([dust, dustStandard, uv, uvStandard, items, parasol, rain, shelter, links]) => {
+      setData({ dust, dustStandard, uv, uvStandard, items, parasol, rain, shelter, links });
+    });
   }, []);
 
   if (!data) return <div>로딩 중...</div>;
 
   return (
     <div className="weather-wrapper">
-      {/* 상단 */}
+      {/* 현재 날씨 헤더 */}
       <div className="header">
-        <p className="location">📍 <strong>이화여대</strong></p>
-        <h1 className="temperature">{data.temperature}°</h1>
-        <div className="range">
-          최고: <span className="temp-bold">{data.temp_max}°</span>&nbsp;&nbsp;
-          최저: <span className="temp-bold">{data.temp_min}°</span>
+        <p className="location">📍 이화여대</p>
+        <h1 className="temperature">16°</h1>
+        <p className="range">최고: 24° / 최저: 12°</p>
+      </div>
+
+      {/* 준비물 안내 */}
+      <div className="checklist-section">
+        <div className="title-bar">오늘의 준비물은?</div>
+        <Checklist />
+      </div>
+
+      <p className="tip">☔ 비가 오는 날에는 해물파전을 먹어보면 어떨까요?</p>
+
+      <div className="card-layout">
+        <div className="left-column">
+          <ItemCard itemList={data.items} />
+          <RainCard rain={data.rain} links={data.links} onPopup={openPopup} />
+          <UVCard
+            uvData={data.uv}
+            uvStandard={data.uvStandard}
+            parasol={data.parasol}
+            onPopup={openPopup}
+          />
+        </div>
+        <div className="right-column">
+          <DustCard dustData={data.dust} standard={data.dustStandard} onPopup={openPopup} />
+          <ShuttleCard links={data.links} />
         </div>
       </div>
 
-      {/* 오늘의 준비물 */}
-      <div className="checklist-card">
-        <div className="checklist-title">오늘의 준비물은?</div>
-        <ul className="checklist-list">
-          {data.checklist.map((item, idx) => (
-            <li key={idx}>✔️ {item}</li>
-          ))}
-        </ul>
-      </div>
-
-      {/* 날씨 팁 */}
-      <p className="tip">{data.tip}</p>
-
-      {/* 카드 그리드 */}
-      <div className="card-grid">
-        {/* 공구템 */}
-        <div className="card item-card">
-          <div className="card-label">오늘의 공구템 추천</div>
-          <img src="/images/jacket.png" alt="공구템" className="card-image" />
-          <p className="card-text">{data.item}</p>
-        </div>
-
-        {/* 미세먼지 */}
-        <div className="card dust-card">
-          <div className="card-label">미세먼지 정보</div>
-
-          {/* PM10 */}
-          <div className="dust-block">
-            <img src="/images/pm10.png" alt="pm10" className="dust-img" />
-            <div className="dust-info">
-              <div className="dust-grade">{data.dust.pm10.grade}</div>
-              <div className="dust-value">{data.dust.pm10.value}</div>
-              <div className="unit">㎍/㎥</div>
-            </div>
-          </div>
-
-          {/* PM25 */}
-          <div className="dust-block">
-            <img src="/images/pm25.png" alt="pm25" className="dust-img" />
-            <div className="dust-info">
-              <div className="dust-grade">{data.dust.pm25.grade}</div>
-              <div className="dust-value">{data.dust.pm25.value}</div>
-              <div className="unit">㎍/㎥</div>
-            </div>
-          </div>
-
-          <p className="subtext">＞ 마스크 추천 제품 ＜</p>
-          <p className="subtext">＞ 미세먼지 건강 정보 ＜</p>
-        </div>
-
-        {/* 강수량 */}
-        <div className="card rain-card">
-          <div className="card-label">강수량</div>
-          <p>강수 확률 {data.rain.chance}%</p>
-          <p>강수량 <strong>{data.rain.amount}mm</strong></p>
-          <p className="subtext">＞ 교내 우산 대여 서비스 안내 ＜</p>
-          <p className="subtext">＞ 비오는 날 위험한 길은? ＜</p>
-        </div>
-
-        {/* 자외선 */}
-        <div className="card uv-card">
-          <div className="card-label">자외선</div>
-          <p className="emoji">{data.uv.emoji}</p>
-          <p>자외선 지수 {data.uv.index} - {data.uv.level}</p>
-          <p className="subtext">＞ 자외선 차단제 추천 제품 ＜</p>
-          <p className="subtext">＞ 양산 추천 제품 ＜</p>
-        </div>
-
-        {/* 셔틀 */}
-        <div className="card shuttle-card">
-          <div className="card-label">셔틀 운행 정보</div>
-          {data.shuttle.routes.map((route, idx) => (
-            <p key={idx}>{route}</p>
-          ))}
-          <p className="subtext">{data.shuttle.note}</p>
-          <p className="subtext underline">＞ {data.shuttle.link} ＜</p>
-        </div>
-      </div>
-
-      {/* 하단 버튼 */}
       <div className="button-area">
-        <button>〉 오늘의 실시간 기온 예보 확인</button>
-        <button>〉 대피소 위치 확인하기</button>
+        <button onClick={() => openPopup('실시간 기온 예보', ['오늘 낮 24도 / 밤 12도'])}>〉 오늘의 실시간 기온 예보 확인</button>
+        <button onClick={() => openPopup('대피소 위치', data.shelter.map(s => `${s.시설명}: ${s.주소.신주소}`))}>〉 대피소 위치 확인하기</button>
       </div>
+
+      {popup.visible && (
+        <Popup title={popup.title} contents={popup.contents} onClose={closePopup} />
+      )}
     </div>
   );
 };
