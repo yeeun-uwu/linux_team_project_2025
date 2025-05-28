@@ -13,6 +13,7 @@ def umbrella_needed() -> bool:
     with open(DATA_DIR, "r", encoding="utf-8") as f:
         data = json.load(f)
     
+<<<<<<< HEAD
     # 자정~06시 제외
     def is_valid_time(item):
         time = item.get("fcstTime", "")
@@ -35,3 +36,12 @@ def umbrella_needed() -> bool:
             return True
 
     return False
+=======
+    data = data["items"]
+    rain = [item for item in data if item["category"] == "POP"] #강수확률
+    form = [item for item in data if item["category"] == "PCP"] #강수형태 
+    if int(data["pm25Value24"]) >= 26 or int(data["pm10Value24"]) >= 51:
+        return True
+    else:
+        return False
+>>>>>>> origin/ryun-new
