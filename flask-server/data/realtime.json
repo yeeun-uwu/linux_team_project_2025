@@ -1,68 +1,68 @@
 {
   "item": [
     {
-      "baseDate": "20250526",
-      "baseTime": "1700",
+      "baseDate": "20250528",
+      "baseTime": "1300",
       "category": "PTY",
       "nx": 59,
       "ny": 126,
       "obsrValue": "0"
     },
     {
-      "baseDate": "20250526",
-      "baseTime": "1700",
+      "baseDate": "20250528",
+      "baseTime": "1300",
       "category": "REH",
       "nx": 59,
       "ny": 126,
-      "obsrValue": "40"
+      "obsrValue": "36"
     },
     {
-      "baseDate": "20250526",
-      "baseTime": "1700",
+      "baseDate": "20250528",
+      "baseTime": "1300",
       "category": "RN1",
       "nx": 59,
       "ny": 126,
       "obsrValue": "0"
     },
     {
-      "baseDate": "20250526",
-      "baseTime": "1700",
+      "baseDate": "20250528",
+      "baseTime": "1300",
       "category": "T1H",
       "nx": 59,
       "ny": 126,
-      "obsrValue": "24.8"
+      "obsrValue": "25.9"
     },
     {
-      "baseDate": "20250526",
-      "baseTime": "1700",
+      "baseDate": "20250528",
+      "baseTime": "1300",
       "category": "UUU",
       "nx": 59,
       "ny": 126,
-      "obsrValue": "0.6"
+      "obsrValue": "-0.8"
     },
     {
-      "baseDate": "20250526",
-      "baseTime": "1700",
+      "baseDate": "20250528",
+      "baseTime": "1300",
       "category": "VEC",
       "nx": 59,
       "ny": 126,
-      "obsrValue": "347"
+      "obsrValue": "56"
     },
     {
-      "baseDate": "20250526",
-      "baseTime": "1700",
+      "baseDate": "20250528",
+      "baseTime": "1300",
       "category": "VVV",
       "nx": 59,
       "ny": 126,
-      "obsrValue": "-2.6"
+      "obsrValue": "-0.5"
     },
     {
-      "baseDate": "20250526",
-      "baseTime": "1700",
+      "baseDate": "20250528",
+      "baseTime": "1300",
       "category": "WSD",
       "nx": 59,
       "ny": 126,
-      "obsrValue": "2.8"
+      "obsrValue": "1.1"
     }
   ]
 }
