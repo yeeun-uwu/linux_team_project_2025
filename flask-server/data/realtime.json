@@ -1,127 +1,68 @@
 {
   "item": [
     {
-<<<<<<< HEAD
       "baseDate": "20250528",
-      "baseTime": "1300",
-=======
-      "baseDate": "20250526",
-      "baseTime": "1700",
->>>>>>> origin/ryun-new
+      "baseTime": "1800",
       "category": "PTY",
       "nx": 59,
       "ny": 126,
       "obsrValue": "0"
     },
     {
-<<<<<<< HEAD
       "baseDate": "20250528",
-      "baseTime": "1300",
+      "baseTime": "1800",
       "category": "REH",
       "nx": 59,
       "ny": 126,
-      "obsrValue": "36"
+      "obsrValue": "51"
     },
     {
       "baseDate": "20250528",
-      "baseTime": "1300",
-=======
-      "baseDate": "20250526",
-      "baseTime": "1700",
-      "category": "REH",
-      "nx": 59,
-      "ny": 126,
-      "obsrValue": "40"
-    },
-    {
-      "baseDate": "20250526",
-      "baseTime": "1700",
->>>>>>> origin/ryun-new
+      "baseTime": "1800",
       "category": "RN1",
       "nx": 59,
       "ny": 126,
       "obsrValue": "0"
     },
     {
-<<<<<<< HEAD
       "baseDate": "20250528",
-      "baseTime": "1300",
+      "baseTime": "1800",
       "category": "T1H",
       "nx": 59,
       "ny": 126,
-      "obsrValue": "25.9"
+      "obsrValue": "23"
     },
     {
       "baseDate": "20250528",
-      "baseTime": "1300",
+      "baseTime": "1800",
       "category": "UUU",
       "nx": 59,
       "ny": 126,
-      "obsrValue": "-0.8"
+      "obsrValue": "0.2"
     },
     {
       "baseDate": "20250528",
-      "baseTime": "1300",
+      "baseTime": "1800",
       "category": "VEC",
       "nx": 59,
       "ny": 126,
-      "obsrValue": "56"
+      "obsrValue": "357"
     },
     {
       "baseDate": "20250528",
-      "baseTime": "1300",
+      "baseTime": "1800",
       "category": "VVV",
       "nx": 59,
       "ny": 126,
-      "obsrValue": "-0.5"
+      "obsrValue": "-3.8"
     },
     {
       "baseDate": "20250528",
-      "baseTime": "1300",
+      "baseTime": "1800",
       "category": "WSD",
       "nx": 59,
       "ny": 126,
-      "obsrValue": "1.1"
-=======
-      "baseDate": "20250526",
-      "baseTime": "1700",
-      "category": "T1H",
-      "nx": 59,
-      "ny": 126,
-      "obsrValue": "24.8"
-    },
-    {
-      "baseDate": "20250526",
-      "baseTime": "1700",
-      "category": "UUU",
-      "nx": 59,
-      "ny": 126,
-      "obsrValue": "0.6"
-    },
-    {
-      "baseDate": "20250526",
-      "baseTime": "1700",
-      "category": "VEC",
-      "nx": 59,
-      "ny": 126,
-      "obsrValue": "347"
-    },
-    {
-      "baseDate": "20250526",
-      "baseTime": "1700",
-      "category": "VVV",
-      "nx": 59,
-      "ny": 126,
-      "obsrValue": "-2.6"
-    },
-    {
-      "baseDate": "20250526",
-      "baseTime": "1700",
-      "category": "WSD",
-      "nx": 59,
-      "ny": 126,
-      "obsrValue": "2.8"
->>>>>>> origin/ryun-new
+      "obsrValue": "3.9"
     }
   ]
 }

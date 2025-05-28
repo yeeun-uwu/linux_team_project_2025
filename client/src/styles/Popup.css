@@ -1,36 +1,54 @@
+/* 배경 어둡게 오버레이 */
 .popup-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 9998;
+  backdrop-filter: blur(1px);
 }
 
-.popup-box {
-  background-color: #EBF8D7;
-  border-radius: 20px;
-  padding: 24px;
-  max-width: 420px;
-  width: 90%;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  text-align: center;
-  font-family: 'Jua', sans-serif;
-}
-
-.popup-title {
-  font-size: 20px;
+/* 팝업 박스 */
+.popup-floating {
+  position: fixed;
+  top: 15%;  
+  left: 50%;
+  transform: translateX(-50%);
   background-color: #00462A;
-  color: white;
-  border-radius: 12px;
-  padding: 10px;
+  border-radius: 20px;
+  padding: 20px;
+  width: 92vw;
+  max-width: 350px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* 헤더: 제목 + X버튼 */
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 16px;
 }
 
+.popup-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+}
+
+/* 닫기 버튼 */
+.popup-close-x {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* 리스트 */
 .popup-content {
   list-style: none;
   padding: 0;
@@ -38,20 +56,11 @@
 }
 
 .popup-content li {
-  background-color: #D2EBB7;
-  padding: 12px;
+  background-color: #CDE8B4;
+  padding: 14px;
   margin-bottom: 10px;
-  border-radius: 10px;
+  border-radius: 16px;
   font-size: 16px;
-}
-
-.popup-close {
-  background-color: #00462A;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 12px;
-  font-size: 16px;
-  margin-top: 12px;
-  border: none;
-  cursor: pointer;
+  font-weight: bold;
+  color: #00462A;
 }
