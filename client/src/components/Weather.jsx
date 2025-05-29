@@ -88,15 +88,16 @@ const Weather = () => {
       setFilteredItems(추천템);
 
       setData({
-        dust: testDust,                     // 👈 테스트용 측정값
-        dustStandard: fetchedDustStandard,  // ✅ 실제 미세먼지 기준표 유지
-        uv: testUv,                         // 👈 테스트용 UV
+        dust: testDust,                     //  테스트용 측정값
+        dustStandard: fetchedDustStandard,  // 실제 미세먼지 기준표 유지
+        uv: testUv,                         // 테스트용 UV
         uvStandard,
         rain,
         temperature,
         parasol,
         links,
         shelter,
+        sunscreen,
         roadData,
         maskDesc,
         pmLinks
@@ -133,7 +134,13 @@ const Weather = () => {
             roadData={data.roadData}
             onPopup={onPopup}
           />
-          <UVCard uvData={data.uv} uvStandard={data.uvStandard} parasol={data.parasol} />
+          <UVCard
+            uvData={data.uv}
+            uvStandard={data.uvStandard}
+            parasol={data.parasol}
+            sunscreen={data.sunscreen} 
+            onPopup={onPopup}
+          />
         </div>
         <div className="right-column">
           <DustCard
