@@ -17,34 +17,38 @@ function getGrade(value, 기준표, type) {
   }
   return { 등급: '정보 없음', 픽토그램: '' };
 }
-
+// 등급에 따른 이모지 이미지 경로 반환
 function getDustImage(grade) {
   switch (grade) {
-    case '좋음': return '/images/pm_good.png';
-    case '보통': return '/images/pm_normal.png';
-    case '나쁨': return '/images/pm_bad.png';
+    case '좋음': return '/images/좋음.png';
+    case '보통': return '/images/보통.png';
+    case '나쁨': return '/images/나쁨.png';
+    case '매우나쁨': return '/images/매우나쁨.png';
     default: return '/images/pm_unknown.png';
   }
 }
-
+// 수치값을 기준으로 막대 그래프 위치 계산
 function getBarPosition(value) {
-  const max = 150;
+  const max = 120;
   const percent = Math.min(100, (value / max) * 100);
   return `${percent}%`;
 }
 
+// DustCard 컴포넌트 본체
 const DustCard = ({ dustData, standard, onPopup, maskDesc, pmLinks }) => {
   const items = dustData?.response?.body?.items;
   if (!items || items.length === 0) {
     return <div className="card">미세먼지 데이터를 불러올 수 없습니다.</div>;
   }
 
+  // PM10, PM2.5 항목 추출
   const pm10Item = items.find(i => i.itemCode === 'PM10');
   const pm25Item = items.find(i => i.itemCode === 'PM25' || i.itemCode === 'PM2.5');
 
   const pm10 = parseInt(pm10Item?.issueVal ?? '0');
   const pm25 = parseInt(pm25Item?.issueVal ?? '0');
 
+  // 등급 계산
   const grade10 = getGrade(pm10, standard, 'PM-10(μg/m³)');
   const grade25 = getGrade(pm25, standard, 'PM-2.5(μg/m³)');
 
@@ -89,9 +93,11 @@ const DustCard = ({ dustData, standard, onPopup, maskDesc, pmLinks }) => {
           </div>
         </div>
 
+        {/* 마스크 종류별 설명 팝업 버튼 */}
         <p
           className="subtext clickable"
           onClick={() => {
+            // 내부 렌더 함수: 마스크 종류 리스트를 아코디언 형식으로 출력
             const renderMaskList = (title, list) => {
               return (
                 <details className="mask-accordion" open>
@@ -117,6 +123,7 @@ const DustCard = ({ dustData, standard, onPopup, maskDesc, pmLinks }) => {
           ＞ 마스크 종류별 설명 ＜
         </p>
 
+        {/* 미세먼지 기준 및 건강 정보 팝업 버튼 */}
         <p
           className="subtext clickable"
           onClick={() => {
@@ -126,6 +133,7 @@ const DustCard = ({ dustData, standard, onPopup, maskDesc, pmLinks }) => {
             const content = (
               <div className="pm-popup-wrapper">
                 <div className="pm-section-label">미세먼지 기준</div>
+                {/* 각 등급별 기준표 카드 출력 */}
                 <div className="pm-standard-grid">
                   {기준표.map((s, i) => (
                     <div key={i} className="pm-standard-card">

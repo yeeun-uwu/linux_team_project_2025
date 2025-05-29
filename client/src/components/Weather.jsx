@@ -83,7 +83,7 @@ const Weather = () => {
       fetch('/data/빗길.json').then(res => res.json()),
       fetch('/data/미세먼지건강정보링크.json').then(res => res.json()),
     ]).then(([fetchedDust, fetchedDustStandard, fetchedUvData, uvStandard, items, links, tips, parasol, maskDesc, shelter, sunscreen, rawroadData, pmLinks]) => {
-      const temperature = { current: 24.5, max: 28, min: 16 };
+      const temperature = { current: 24.5, max: 28, min: 24 };
       setHourlyTemperature([
         { hour: '00시', temp: 10 },
         { hour: '01시', temp: 9 },
@@ -112,7 +112,7 @@ const Weather = () => {
       ]);
       const rain = { weather: '흐림', probability: '0%', amount: '0mm' };
       const testDust = {
-        response: { body: { items: [{ itemCode: 'PM10', issueVal: '40' }, { itemCode: 'PM25', issueVal: '20' }] } }
+        response: { body: { items: [{ itemCode: 'PM10', issueVal: '100' }, { itemCode: 'PM25', issueVal: '100' }] } }
       };
       const testUv = {
         response: { body: { items: [{ uvIndex: '6' }] } }

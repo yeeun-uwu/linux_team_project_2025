@@ -1,6 +1,7 @@
 import React from 'react';
 import '../../styles/RainCard.css';
 
+// RainCard 컴포넌트: 강수 확률, 강수량, 우산 대여 링크, 위험한 길 안내 팝업을 포함한 카드
 const RainCard = ({ rain, links, roadData, onPopup }) => {
   return (
     <div className="card-container">
@@ -9,6 +10,8 @@ const RainCard = ({ rain, links, roadData, onPopup }) => {
         <p>강수 확률 {rain.probability}</p>
         <p>강수량 {rain.amount}</p>
         <p></p>
+
+        {/* 우산 대여 서비스 링크 (외부 사이트로 이동) */}
         <a
           className="subtext"
           href={links?.링크?.['우산 대여 서비스'] || '#'}
@@ -18,6 +21,7 @@ const RainCard = ({ rain, links, roadData, onPopup }) => {
           ＞ 우산 대여 서비스 안내 ＜
         </a>
 
+        {/* 위험한 길 팝업 버튼 */}
         <p
           className="subtext clickable"
           onClick={() => {
@@ -28,6 +32,7 @@ const RainCard = ({ rain, links, roadData, onPopup }) => {
               return;
             }
 
+            // roadData 배열을 순회하며 UI 요소 구성
             const content = roads.map((road, i) => {
               return (
                 <div key={i} className="rain-road-box">

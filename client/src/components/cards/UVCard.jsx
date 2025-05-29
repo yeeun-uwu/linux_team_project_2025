@@ -1,6 +1,7 @@
 import React from 'react';
 import '../../styles/UVCard.css';
 
+// 자외선기준 JSON을 기반으로 등급을 계산하는 함수
 const getUVGradeFromStandard = (index, 기준) => {
   const ranges = 기준['기준']['자외선 지수'];
 
@@ -20,6 +21,7 @@ const getUVGradeFromStandard = (index, 기준) => {
   return '알 수 없음';
 };
 
+// UVCard 컴포넌트: 자외선 정보, 차단제/양산 추천 버튼 및 팝업 연동 포함
 const UVCard = ({ uvData, uvStandard, parasol, onPopup, sunscreen }) => {
   const hasData = uvData?.response?.body?.items?.length && uvStandard?.기준?.['자외선 지수'];
 
@@ -27,6 +29,7 @@ const UVCard = ({ uvData, uvStandard, parasol, onPopup, sunscreen }) => {
     <div className="card-container">
       <div className="card-label">자외선</div>
 
+      {/* 자외선 데이터가 없을 때 예외 처리 */}
       {!hasData ? (
         <div className="card uv-card square-card">자외선 데이터를 불러올 수 없습니다.</div>
       ) : (
@@ -40,6 +43,7 @@ const UVCard = ({ uvData, uvStandard, parasol, onPopup, sunscreen }) => {
               <p className="emoji">☀️</p>
               <p>자외선 지수 {index} - {level}</p>
 
+              {/* 자외선 차단제 추천 버튼 (팝업 열림) */}
               <p
                 className="subtext clickable"
                 onClick={() =>
@@ -71,13 +75,14 @@ const UVCard = ({ uvData, uvStandard, parasol, onPopup, sunscreen }) => {
                           </a>
                         </div>
                       </div>
-                    </div>  
+                    </div>
                   )))
                 }
               >
                 ＞ 자외선 차단제 추천 제품 ＜
               </p>
 
+              {/* 양산 추천 버튼 (팝업 열림) */}
               <p
                 className="subtext clickable"
                 onClick={() =>
