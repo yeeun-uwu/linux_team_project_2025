@@ -8,7 +8,7 @@ const RainCard = ({ rain, links, roadData, onPopup }) => {
       <div className="card rain-card square-card">
         <p>강수 확률 {rain.probability}</p>
         <p>강수량 {rain.amount}</p>
-
+        <p></p>
         <a
           className="subtext"
           href={links?.링크?.['우산 대여 서비스'] || '#'}

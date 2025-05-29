@@ -42,17 +42,34 @@ const Weather = () => {
       fetch('/data/자외선차단제.json').then(res => res.json()),
       fetch('/data/빗길.json').then(res => res.json()),
       fetch('/data/미세먼지건강정보링크.json').then(res => res.json()),
-    ]).then(([dustStandard, dustStandardDetail, uvData, uvStandard, items, links, tips, parasol, maskDesc, shelter, sunscreen, roadRawData, pmLinks]) => {
+    ]).then(([fetchedDust, fetchedDustStandard, fetchedUvData, uvStandard, items, links, tips, parasol, maskDesc, shelter, sunscreen, rawroadData, pmLinks]) => {
 
-      // 임시 데이터 (실제는 백엔드에서 받아옴)
+      // ✅ 테스트용 임시 데이터 (UI 개발용)
       const temperature = { current: 24.5, max: 28, min: 16 };
       const hourlyTemp = {
         '00': 18, '03': 17, '06': 16, '09': 20, '12': 24,
         '15': 26, '18': 25, '21': 22
       };
       const rain = { weather: '맑음', probability: '0%', amount: '0mm' };
-      const dust = { response: { body: { items: [{ itemCode: 'PM10', issueVal: '40' }, { itemCode: 'PM25', issueVal: '20' }] } } };
-      const uv = { response: { body: { items: [{ uvIndex: '6' }] } } };
+
+      const testDust = {
+        response: {
+          body: {
+            items: [
+              { itemCode: 'PM10', issueVal: '40' },
+              { itemCode: 'PM25', issueVal: '20' }
+            ]
+          }
+        }
+      };
+
+      const testUv = {
+        response: {
+          body: {
+            items: [{ uvIndex: '6' }]
+          }
+        }
+      };
 
       const weather = rain.weather || '맑음';
       const tipList = tips?.['날씨별_이야기']?.[weather] || ['오늘 하루도 좋은 하루 되세요!'];
@@ -65,14 +82,30 @@ const Weather = () => {
         const [min, max] = item.온도;
         return minTemp >= min && minTemp <= max;
       });
-      const roadData = roadRawData["빗길"] || [];
+
+      const roadData = rawroadData["빗길"] || [];
 
       setFilteredItems(추천템);
 
-      setData({ dust, dustStandard, uv, uvStandard, rain, temperature, parasol, links, shelter, roadData, maskDesc, pmLinks });
+      setData({
+        dust: testDust,                     // 👈 테스트용 측정값
+        dustStandard: fetchedDustStandard,  // ✅ 실제 미세먼지 기준표 유지
+        uv: testUv,                         // 👈 테스트용 UV
+        uvStandard,
+        rain,
+        temperature,
+        parasol,
+        links,
+        shelter,
+        roadData,
+        maskDesc,
+        pmLinks
+      });
+
       setHourlyTemperature(hourlyTemp);
     });
   }, []);
+
 
   if (!data) return <div>로딩 중...</div>;
 

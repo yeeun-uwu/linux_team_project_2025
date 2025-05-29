@@ -129,8 +129,8 @@ const DustCard = ({ dustData, standard, onPopup, maskDesc, pmLinks }) => {
                 <div className="pm-standard-grid">
                   {기준표.map((s, i) => (
                     <div key={i} className="pm-standard-card">
-                      <img src={`/images/${s.등급}.png`} alt={s.등급} className="pm-icon" />
-                      <p className="pm-grade">{s.픽토그램} {s.등급}</p>
+                      <div className="pm-icon-text">{s.픽토그램}</div>
+                      <p className="pm-grade">{s.등급}</p>
                       <p className="pm-value">PM10: {s["PM-10(μg/m³)"]}</p>
                       <p className="pm-value">PM2.5: {s["PM-2.5(μg/m³)"]}</p>
                     </div>
@@ -143,7 +143,7 @@ const DustCard = ({ dustData, standard, onPopup, maskDesc, pmLinks }) => {
                     href={l.링크}
                     target="_blank"
                     rel="noreferrer"
-                    className="pm-button"
+                    className="pm-link-button"
                   >
                     {l.내용}
                   </a>
