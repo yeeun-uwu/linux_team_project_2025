@@ -22,7 +22,6 @@ const RainCard = ({ rain, links, roadData, onPopup }) => {
           className="subtext clickable"
           onClick={() => {
             const roads = roadData;
-            console.log("DEBUG: roads =", roads);
 
             if (!roads || roads.length === 0) {
               onPopup("비오는 날 위험한 길은?", "등록된 정보가 없습니다.");
@@ -30,7 +29,6 @@ const RainCard = ({ rain, links, roadData, onPopup }) => {
             }
 
             const content = roads.map((road, i) => {
-              console.log("ROAD ITEM:", road);
               return (
                 <div key={i} className="rain-road-box">
                   <span className="road-name">{road.이름}</span>
@@ -46,7 +44,6 @@ const RainCard = ({ rain, links, roadData, onPopup }) => {
               );
             });
 
-            console.log("POPUP CONTENT:", content);
             onPopup("비오는 날 위험한 길은?", content);
           }}
         >

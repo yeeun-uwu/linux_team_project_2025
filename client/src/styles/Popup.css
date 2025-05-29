@@ -113,7 +113,7 @@
   line-height: 1.6;
 }
 
-/*미세먼지정보팝업*/
+/*미세먼지 정보 팝업*/
 .pm-popup-wrapper {
   text-align: left;
 }
@@ -180,7 +180,7 @@
   background-color: #CDE8B4;
 }
 
-/*빗길*/
+/*빗길 - 위험한 길*/
 .rain-road-box {
   display: flex;
   justify-content: space-between;
@@ -287,5 +287,73 @@
 
 .bottom-row .price {
   text-align: left;
-  align-self: flex-end; 
+  align-self: flex-end;
+}
+
+/*공구템*/
+.item-popup-wrapper {
+  padding: 16px;
+}
+
+.item-section-title {
+  font-size: 18px;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.item-subtitle {
+  font-size: 11px;
+  color: #dddddd;
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+/* 2열 그리드 레이아웃 */
+.item-popup-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+/* 각 카드 블럭 */
+.item-popup-block {
+  background-color: #CDE8B4;
+  border-radius: 18px;
+  padding: 12px 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* 제품 이미지 */
+.item-popup-img {
+  width: 100%;
+  height: auto;
+  max-height: 80px;
+  object-fit: contain;
+  margin-bottom: 8px;
+}
+
+/* 이름 (제목) */
+.item-popup-label {
+  font-weight: bold;
+  font-size: 13px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+/* 추천 기온 텍스트 */
+.item-popup-temp {
+  font-size: 12px;
+  margin-bottom: 2px;
+}
+
+/* 두께 텍스트 */
+.item-popup-thick {
+  font-size: 11px;
+  opacity: 0.9;
+  white-space: pre-line;
 }
