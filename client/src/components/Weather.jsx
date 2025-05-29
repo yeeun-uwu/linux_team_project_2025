@@ -6,6 +6,8 @@ import RainCard from './cards/RainCard';
 import Checklist from './cards/Checklist';
 import ShuttleCard from './cards/ShuttleCard';
 import WeatherToggles from './cards/WeatherToggles';
+import ParasolList from './cards/ParasolList';
+import Popup from './cards/Popup';
 import '../styles/Weather.css';
 
 const Weather = () => {
@@ -13,17 +15,35 @@ const Weather = () => {
   const [tip, setTip] = useState('');
   const [filteredItems, setFilteredItems] = useState([]);
   const [hourlyTemperature, setHourlyTemperature] = useState({});
+  const [popup, setPopup] = useState({ open: false, title: '', content: null });
+
+  const onPopup = (title, content) => {
+    setPopup({ open: true, title, content });
+  };
+
+  const needs = {
+    need_mask: true,
+    need_sunscreen: true,
+    need_umbrella: false
+  };
 
   useEffect(() => {
     Promise.all([
+      fetch('/data/미세먼지.json').then(res => res.json()),
       fetch('/data/미세먼지기준.json').then(res => res.json()),
+      fetch('/data/자외선지수.json').then(res => res.json()),
       fetch('/data/자외선기준.json').then(res => res.json()),
       fetch('/data/공구템.json').then(res => res.json()),
-      fetch('/data/양산.json').then(res => res.json()),
-      fetch('/data/날씨별잡지식.json').then(res => res.json()),
       fetch('/data/링크.json').then(res => res.json()),
-      fetch('/data/대피소.json').then(res => res.json())
-    ]).then(([dustStandard, uvStandard, items, parasol, tips, links, shelter]) => {
+      fetch('/data/날씨별잡지식.json').then(res => res.json()),
+      fetch('/data/양산.json').then(res => res.json()),
+      fetch('/data/마스크설명.json').then(res => res.json()),
+      fetch('/data/대피소.json').then(res => res.json()),
+      fetch('/data/자외선차단제.json').then(res => res.json()),
+      fetch('/data/빗길.json').then(res => res.json()),
+      fetch('/data/미세먼지건강정보링크.json').then(res => res.json()),
+    ]).then(([dustStandard, dustStandardDetail, uvData, uvStandard, items, links, tips, parasol, maskDesc, shelter, sunscreen, roadRawData, pmLinks]) => {
+
       // 임시 데이터 (실제는 백엔드에서 받아옴)
       const temperature = { current: 24.5, max: 28, min: 16 };
       const hourlyTemp = {
@@ -45,9 +65,11 @@ const Weather = () => {
         const [min, max] = item.온도;
         return minTemp >= min && minTemp <= max;
       });
+      const roadData = roadRawData["빗길"] || [];
+
       setFilteredItems(추천템);
 
-      setData({ dust, dustStandard, uv, uvStandard, rain, temperature, parasol, links, shelter });
+      setData({ dust, dustStandard, uv, uvStandard, rain, temperature, parasol, links, shelter, roadData, maskDesc, pmLinks });
       setHourlyTemperature(hourlyTemp);
     });
   }, []);
@@ -64,13 +86,7 @@ const Weather = () => {
 
       <div className="checklist-section">
         <div className="title-bar">오늘의 준비물은?</div>
-        <Checklist
-          rain={data.rain}
-          uv={data.uv}
-          dust={data.dust}
-          dustStandard={data.dustStandard}
-          uvStandard={data.uvStandard}
-        />
+        <Checklist needs={needs} />
       </div>
 
       <p className="tip">☀️ {tip}</p>
@@ -78,11 +94,22 @@ const Weather = () => {
       <div className="card-layout">
         <div className="left-column">
           <ItemCard itemList={filteredItems} />
-          <RainCard rain={data.rain} links={data.links} />
+          <RainCard
+            rain={data.rain}
+            links={data.links}
+            roadData={data.roadData}
+            onPopup={onPopup}
+          />
           <UVCard uvData={data.uv} uvStandard={data.uvStandard} parasol={data.parasol} />
         </div>
         <div className="right-column">
-          <DustCard dustData={data.dust} standard={data.dustStandard} />
+          <DustCard
+            dustData={data.dust}
+            standard={data.dustStandard}
+            onPopup={onPopup}
+            maskDesc={data.maskDesc}
+            pmLinks={data.pmLinks}
+          />
           <ShuttleCard links={data.links} />
         </div>
       </div>
@@ -118,6 +145,14 @@ const Weather = () => {
           { hour: '23시', temp: 11 },
         ]}
       />
+
+      {popup.open && (
+        <Popup
+          title={popup.title}
+          contents={popup.content}
+          onClose={() => setPopup({ ...popup, open: false })}
+        />
+      )}
 
     </div>
   );

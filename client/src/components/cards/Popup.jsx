@@ -2,6 +2,12 @@ import React from 'react';
 import '../../styles/Popup.css';
 
 const Popup = ({ title, contents, onClose }) => {
+  const contentArray = contents == null
+    ? []
+    : Array.isArray(contents)
+      ? contents
+      : [contents];
+
   return (
     <>
       <div className="popup-overlay" onClick={onClose}></div>
@@ -11,11 +17,17 @@ const Popup = ({ title, contents, onClose }) => {
           <span className="popup-title">{title}</span>
           <button className="popup-close-x" onClick={onClose}>✕</button>
         </div>
-        <ul className="popup-content">
-          {contents.map((item, idx) => (
-            <li key={idx}>{typeof item === 'object' ? item.내용 : item}</li>
-          ))}
-        </ul>
+
+        <div className="popup-content">
+          {contentArray.map((item, idx) => {
+            if (!item) return null; 
+            return (
+              <div key={idx} className="popup-mask-line">
+                {React.isValidElement(item) ? item : String(item)}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </>
   );

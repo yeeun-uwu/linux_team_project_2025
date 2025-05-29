@@ -10,7 +10,7 @@
 /* 팝업 박스 */
 .popup-floating {
   position: fixed;
-  top: 15%;  
+  top: 15%;
   left: 50%;
   transform: translateX(-50%);
   background-color: #00462A;
@@ -64,3 +64,78 @@
   font-weight: bold;
   color: #00462A;
 }
+
+/* 마스크 */
+.mask-accordion summary {
+  color: #FFFFFF;
+  font-weight: bold;
+  font-size: 17px;
+  cursor: pointer;
+  margin: 20px 0 10px;
+  outline: none;
+  list-style: none;
+}
+
+.mask-accordion {
+  margin-bottom: 16px;
+}
+
+.mask-accordion[open] summary::after {
+  content: "▲";
+  float: right;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.mask-accordion:not([open]) summary::after {
+  content: "▼";
+  float: right;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.mask-box {
+  background-color: #CDE8B4;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  color: #00462A;
+}
+
+.mask-item-title {
+  font-weight: bold;
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.mask-item-desc {
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/*빗길*/
+.rain-road-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin: 8px 0;
+  background-color: #BBDDA0;
+  border-radius: 8px;
+}
+
+.road-name {
+  font-weight: bold;
+  color: #00462A;
+}
+
+.road-view-button {
+  background-color: #00462A;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+

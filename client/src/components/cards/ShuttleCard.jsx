@@ -12,12 +12,12 @@ const ShuttleCard = ({ links }) => {
         <p>야간&nbsp;기숙사&nbsp;21:10&nbsp;~&nbsp;23:40</p>
         <p className="shuttle-note">12:00 ~ 13:00 점심시간 제외</p>
         <a
-          className="subtext"
-          href={links.링크['셔틀버스 실시간 위치 확인']}
+          href={links?.링크?.['셔틀버스 실시간 위치 확인'] || '#'}
           target="_blank"
           rel="noreferrer"
         >
-          ＞ 셔틀버스 실시간 위치 확인 ＜
+
+          ＞셔틀버스 실시간 위치 확인＜
         </a>
       </div>
     </div>
