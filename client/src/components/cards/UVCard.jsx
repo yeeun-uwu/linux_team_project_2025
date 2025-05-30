@@ -1,6 +1,7 @@
 import React from 'react';
 import '../../styles/UVCard.css';
 
+// 자외선기준 JSON을 기반으로 등급을 계산하는 함수
 const getUVGradeFromStandard = (index, 기준) => {
   const ranges = 기준['기준']['자외선 지수'];
 
@@ -20,13 +21,15 @@ const getUVGradeFromStandard = (index, 기준) => {
   return '알 수 없음';
 };
 
-const UVCard = ({ uvData, uvStandard, parasol, onPopup }) => {
+// UVCard 컴포넌트: 자외선 정보, 차단제/양산 추천 버튼 및 팝업 연동 포함
+const UVCard = ({ uvData, uvStandard, parasol, onPopup, sunscreen }) => {
   const hasData = uvData?.response?.body?.items?.length && uvStandard?.기준?.['자외선 지수'];
 
   return (
     <div className="card-container">
       <div className="card-label">자외선</div>
 
+      {/* 자외선 데이터가 없을 때 예외 처리 */}
       {!hasData ? (
         <div className="card uv-card square-card">자외선 데이터를 불러올 수 없습니다.</div>
       ) : (
@@ -40,53 +43,76 @@ const UVCard = ({ uvData, uvStandard, parasol, onPopup }) => {
               <p className="emoji">☀️</p>
               <p>자외선 지수 {index} - {level}</p>
 
+              {/* 자외선 차단제 추천 버튼 (팝업 열림) */}
               <p
                 className="subtext clickable"
-                onClick={() => onPopup('자외선 차단제 추천 제품', [
-                  '유기자차: 가볍고 흡수 빠름',
-                  '무기자차: 민감 피부 적합, 백탁 있음',
-                  '혼합자차: 장점 혼합된 타입'
-                ])}
+                onClick={() =>
+                  onPopup('자외선 차단제 추천 제품', sunscreen.map((item, index) => (
+                    <div key={index} className="uv-popup-card">
+                      <span className="uv-popup-rank">{item.rank}위</span>
+
+                      <img
+                        src={`/${item.사진}`}
+                        alt={item.name}
+                        className="uv-popup-img"
+                      />
+
+                      <div className="uv-popup-info">
+                        <div className='text-group'>
+                          <div className="brand">{item.brand}</div>
+                          <div className="title">{item.name}</div>
+                        </div>
+
+                        <div className='bottom-row'>
+                          <div className="price">가격: {item.price}</div>
+                          <a
+                            href={item.link}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="uv-popup-button"
+                          >
+                            구매하러 가기
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  )))
+                }
               >
                 ＞ 자외선 차단제 추천 제품 ＜
               </p>
 
+              {/* 양산 추천 버튼 (팝업 열림) */}
               <p
                 className="subtext clickable"
                 onClick={() =>
-                  onPopup('양산 추천', parasol.map((item, index) => (
-                    <div key={index} style={{
-                      marginBottom: '16px',
-                      padding: '16px',
-                      backgroundColor: '#DEF0C5',
-                      borderRadius: '20px',
-                      fontFamily: 'Jua',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '4px',
-                      alignItems: 'flex-start'
-                    }}>
-                      <div style={{ fontWeight: 'bold', fontSize: '18px', lineHeight: 1.4 }}>{item.rank}위. {item.name}</div>
-                      <div style={{ fontSize: '14px', color: '#333' }}>
-                        브랜드: {item.brand} / 구성: {item.type}
-                      </div>
-                      <div style={{ fontSize: '15px', marginBottom: '12px' }}>가격: {item.price}</div>
-                      <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
-                        <a
-                          href={item.link}
-                          target="_blank"
-                          rel="noreferrer"
-                          style={{
-                            backgroundColor: '#00462A',
-                            color: 'white',
-                            padding: '8px 16px',
-                            borderRadius: '12px',
-                            fontSize: '14px',
-                            textDecoration: 'none'
-                          }}
-                        >
-                          구매하러 가기
-                        </a>
+                  onPopup('양산 추천 제품', parasol.map((item, index) => (
+                    <div key={index} className="uv-popup-card">
+                      <span className="uv-popup-rank">{item.rank}위</span>
+
+                      <img
+                        src={`/${item.사진}`}
+                        alt={item.name}
+                        className="uv-popup-img"
+                      />
+
+                      <div className="uv-popup-info">
+                        <div className="text-group">
+                          <div className="brand">{item.brand}</div>
+                          <div className="title">{item.name}</div>
+                        </div>
+
+                        <div className='bottom-row'>
+                          <div className="price">가격: {item.price}</div>
+                          <a
+                            href={item.link}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="uv-popup-button"
+                          >
+                            구매하러 가기
+                          </a>
+                        </div>
                       </div>
                     </div>
                   )))
@@ -94,6 +120,7 @@ const UVCard = ({ uvData, uvStandard, parasol, onPopup }) => {
               >
                 ＞ 양산 추천 제품 ＜
               </p>
+
             </div>
           );
         })()
