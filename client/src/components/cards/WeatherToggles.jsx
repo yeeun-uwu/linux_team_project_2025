@@ -21,11 +21,6 @@ const WeatherToggles = ({ temperature, shelter, hourlyTemperature }) => {
   const toggleSection = (key) => {
     setOpenKeys((prev) => ({ ...prev, [key]: !prev[key] }));
   };
-  // 시간별 온도 데이터가 없으면 더미 데이터 생성 (24시간 기준)
-  const dummyData = hourlyTemperature || Array.from({ length: 24 }, (_, i) => ({
-    hour: `${i}시`,
-    temp: 8 + Math.round(10 * Math.sin(i / 3)),
-  }));
 
   return (
     <div className="weather-toggle-section">
@@ -43,10 +38,13 @@ const WeatherToggles = ({ temperature, shelter, hourlyTemperature }) => {
         </button>
         {/* 토글이 열려 있으면 차트 출력 */}
         {openKeys.temperature && (
-          <div className="toggle-content">
+        <div className="toggle-content">
+          {!hourlyTemperature || hourlyTemperature.length === 0 ? (
+            <div className="error-message">시간별 온도 데이터를 불러올 수 없습니다.</div>
+          ) : (
             <div className="temp-graph-container">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={dummyData}>
+                <LineChart data={hourlyTemperature}>
                   <XAxis dataKey="hour" />
                   <YAxis domain={[0, 30]} />
                   <Tooltip formatter={(value) => [`${value}°`, "기온"]} />
@@ -55,13 +53,14 @@ const WeatherToggles = ({ temperature, shelter, hourlyTemperature }) => {
                     dataKey="temp"
                     stroke="#00462A"
                     strokeWidth={3}
-                    dot={{ fill: "white", stroke: "#00462A", strokeWidth: 2, r: 4 }}
+                    dot={{ fill: "white", stroke: "#00462A", strokeWidth: 2, r: 3 }}
                   />
                 </LineChart>
               </ResponsiveContainer>
             </div>
-          </div>
-        )}
+          )}
+        </div>
+      )}
       </div>
 
       {/* 대피소 위치 정보 토글*/}

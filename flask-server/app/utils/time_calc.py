@@ -5,9 +5,9 @@ def time_calc(time_now : datetime) -> str:
     minute = time_now.minute
 
     if minute <= 10:
-        return f"{hour-1}00"
+        return f"{hour-1:02d}00"
     else:
-        return f"{hour}00"
+        return f"{hour:02d}00"
     
     '''
     초단기실황조회의 base_time은 정시단위

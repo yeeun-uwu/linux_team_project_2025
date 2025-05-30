@@ -63,13 +63,13 @@ def dust_route():
                 "items": [
                     {   
                         "itemCode" : "PM10",
-                        "Value": dust[0][0],
+                        "issueVal": dust[0][0],
                         "Level" : dust[0][1],
                         "unit" : "㎍/㎥"
                     },
                     {
                         "itemCode" : "PM25",
-                        "Value": dust[1][0],
+                        "issueVal": dust[1][0],
                         "Level" : dust[1][1],
                         "unit" : "㎍/㎥"
                     }

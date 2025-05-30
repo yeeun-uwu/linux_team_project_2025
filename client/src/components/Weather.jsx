@@ -23,7 +23,7 @@ const Weather = () => {
   };
 
   useEffect(() => {
-    /* 백엔드 연동용 코드 
+    
     Promise.all([
       fetch('/api/current/dust').then(res => res.json()),
       fetch('/data/미세먼지기준.json').then(res => res.json()),
@@ -41,11 +41,16 @@ const Weather = () => {
       fetch('/api/current/max-min-temp').then(res => res.json()),
       fetch('/api/today/need').then(res => res.json()),
       fetch('/api/current/temp').then(res => res.json()),
-    ]).then(([dust, dustStandard, uv, uvStandard, items, links, tips, parasol, maskDesc, shelter, sunscreen, roadData, pmLinks, tempInfo, needsInfo, nowTemp]) => {
+      fetch('/api/current/sky').then(res => res.json()),
+      fetch('/api/current/rain').then(res => res.json()),
+      fetch('/api/today/temp-forecast').then(res => res.json()),
+    ]).then(([dust, dustStandard, uv, uvStandard, items, links, tips, parasol, maskDesc, shelter, sunscreen, roadData, pmLinks, tempInfo, needsInfo, nowTemp, nowWeather, nowRain, hourlytemp]) => {
+      setHourlyTemperature(hourlytemp.body.items[0].forecast.map(item => ({ hour: item.hour, temp: item.temp })));
+
       const temperature = {
-        current: nowTemp.temperature,
-        max: tempInfo['maximum temperature'],
-        min: tempInfo['minimum temperature']
+          current: nowTemp.body.items[0].temperature,
+          max: tempInfo.body.items[1].Value,
+          min: tempInfo.body.items[0].Value
       };
 
       const minTemp = temperature.min;
@@ -55,34 +60,21 @@ const Weather = () => {
         return minTemp >= min && minTemp <= max;
       });
 
-      const weather = '맑음'; // API로 연동 시 대체
+      const weather = nowWeather.body.items[0].Value; // API로 연동 시 대체
       const tipList = tips?.['날씨별_이야기']?.[weather] || ['오늘 하루도 좋은 하루 되세요!'];
       const randomTip = tipList[Math.floor(Math.random() * tipList.length)];
 
       setTip(typeof randomTip === 'object' ? randomTip.내용 : randomTip);
       setFilteredItems(추천템);
       setAllItems(itemArray);
-      setNeeds(needsInfo); // ← 백엔드에서 받은 데이터로 설정
-      setData({ dust, dustStandard, uv, uvStandard, rain: {}, temperature, parasol, links, shelter, sunscreen, roadData, maskDesc, pmLinks });
+      setNeeds(needsInfo.body.items[0]); // ← 백엔드에서 받은 데이터로 설정
+      setData({ dust, dustStandard, uv, uvStandard, nowRain, temperature, parasol, links, shelter, sunscreen, roadData, maskDesc, pmLinks });
     });
-    */
-
+    
+    /*
     // 임시 데이터 시작 (백엔드 연동 시 삭제)
     Promise.all([
-      fetch('/data/미세먼지.json').then(res => res.json()),
-      fetch('/data/미세먼지기준.json').then(res => res.json()),
-      fetch('/data/자외선지수.json').then(res => res.json()),
-      fetch('/data/자외선기준.json').then(res => res.json()),
-      fetch('/data/공구템.json').then(res => res.json()),
-      fetch('/data/링크.json').then(res => res.json()),
-      fetch('/data/날씨별잡지식.json').then(res => res.json()),
-      fetch('/data/양산.json').then(res => res.json()),
-      fetch('/data/마스크설명.json').then(res => res.json()),
-      fetch('/data/대피소.json').then(res => res.json()),
-      fetch('/data/자외선차단제.json').then(res => res.json()),
-      fetch('/data/빗길.json').then(res => res.json()),
-      fetch('/data/미세먼지건강정보링크.json').then(res => res.json()),
-    ]).then(([fetchedDust, fetchedDustStandard, fetchedUvData, uvStandard, items, links, tips, parasol, maskDesc, shelter, sunscreen, rawroadData, pmLinks]) => {
+.then(([fetchedDust, fetchedDustStandard, fetchedUvData, uvStandard, items, links, tips, parasol, maskDesc, shelter, sunscreen, rawroadData, pmLinks]) => {
       const temperature = { current: 24.5, max: 28, min: 24 };
       setHourlyTemperature([
         { hour: '00시', temp: 10 },
@@ -110,31 +102,7 @@ const Weather = () => {
         { hour: '22시', temp: 13 },
         { hour: '23시', temp: 11 },
       ]);
-      const rain = { weather: '흐림', probability: '0%', amount: '0mm' };
-      const testDust = {
-        response: { body: { items: [{ itemCode: 'PM10', issueVal: '100' }, { itemCode: 'PM25', issueVal: '100' }] } }
-      };
-      const testUv = {
-        response: { body: { items: [{ uvIndex: '6' }] } }
-      };
 
-      const weather = rain.weather || '맑음';
-      const tipList = tips?.['날씨별_이야기']?.[weather] || ['오늘 하루도 좋은 하루 되세요!'];
-      const randomTip = tipList[Math.floor(Math.random() * tipList.length)];
-
-      const minTemp = temperature.min;
-      const itemArray = items?.["공구템"] || [];
-      const 추천템 = itemArray.filter(item => {
-        const [min, max] = item.온도;
-        return minTemp >= min && minTemp <= max;
-      });
-
-      const roadData = rawroadData["빗길"] || [];
-
-      setFilteredItems(추천템);
-      setAllItems(itemArray);
-      setTip(typeof randomTip === 'object' ? randomTip.내용 : randomTip);
-      setNeeds({ need_mask: true, need_sunscreen: true, need_umbrella: false });
       setData({
         dust: testDust,
         dustStandard: fetchedDustStandard,
@@ -152,11 +120,12 @@ const Weather = () => {
       });
     });
     // ❌ 임시 데이터 끝
+    */
 
   }, []);
 
   if (!data) return <div>로딩 중...</div>;
-
+  console.log(hourlyTemperature)
   return (
     <div className="weather-wrapper">
       <div className="header">
@@ -175,7 +144,7 @@ const Weather = () => {
       <div className="card-layout">
         <div className="left-column">
           <ItemCard itemList={filteredItems} allItems={allItems} onPopup={onPopup} />
-          <RainCard rain={data.rain} links={data.links} roadData={data.roadData} onPopup={onPopup} />
+          <RainCard rain={data.nowRain} links={data.links} roadData={data.roadData} onPopup={onPopup} />
           <UVCard uvData={data.uv} uvStandard={data.uvStandard} parasol={data.parasol} sunscreen={data.sunscreen} onPopup={onPopup} />
         </div>
         <div className="right-column">

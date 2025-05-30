@@ -14,16 +14,9 @@ def current_temp():
             "body" : {
                 "items": [
                     {
-                        "itemCode": "mask",
-                        "need": mask_needed(),
-                    },
-                    {
-                        "itemCode": "sunscreen",
-                        "need": sunscreen_needed(),
-                    },
-                    {
-                        "itemCode": "umbrella",
-                        "need": umbrella_needed(),
+                        "need_mask": mask_needed(),
+                        "need_sunscreen": sunscreen_needed(),
+                        "need_umbrella": umbrella_needed(),
                     }
                 ]
             }

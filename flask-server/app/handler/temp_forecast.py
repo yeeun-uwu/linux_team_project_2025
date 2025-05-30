@@ -28,7 +28,7 @@ def temp_forecast() -> list:
     # fcstTime 기준 정렬 후 값만 추출
     sorted_tmps = sorted(temps, key=lambda x: int(x["fcstTime"]))
     temperature_dict = [
-        {f'{int(item["fcstTime"][:2]):02d}시': int(item["fcstValue"])}
+        {"hour": f'{int(item["fcstTime"][:2]):02d}시', "temp": int(item["fcstValue"])}
         for item in sorted_tmps
     ]
     return temperature_dict

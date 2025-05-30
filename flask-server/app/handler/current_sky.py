@@ -20,7 +20,8 @@ def current_sky() -> str:
     if pty is None:
         logger.warning("PTY 데이터가 없습니다.")
         return None  # 혹은 기본값 반환
-
+    
+    pty = pty[0]  # 첫 번째 항목만 사용
     if pty["obsrValue"] == "0":
         FORECAST_DATA_DIR = BASE_DIR + '/data/forecast.json'
         with open(FORECAST_DATA_DIR, "r", encoding="utf-8") as f:
@@ -32,6 +33,7 @@ def current_sky() -> str:
         fcst_time = hour_block.strftime("%H%M") 
 
         sky = [item for item in forecast if item["category"] == "SKY" and item["fcstTime"] == fcst_time]
+        sky = sky[0]
 
         if sky["fcstValue"] == "1":
             return "맑음"
