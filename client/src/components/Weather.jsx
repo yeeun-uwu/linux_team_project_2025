@@ -1,113 +1,194 @@
 import React, { useEffect, useState } from 'react';
-import './Weather.css';
+import DustCard from './cards/DustCard';
+import UVCard from './cards/UVCard';
+import ItemCard from './cards/ItemCard';
+import RainCard from './cards/RainCard';
+import Checklist from './cards/Checklist';
+import ShuttleCard from './cards/ShuttleCard';
+import WeatherToggles from './cards/WeatherToggles';
+import Popup from './cards/Popup';
+import '../styles/Weather.css';
 
 const Weather = () => {
   const [data, setData] = useState(null);
+  const [tip, setTip] = useState('');
+  const [filteredItems, setFilteredItems] = useState([]);
+  const [allItems, setAllItems] = useState([]);
+  const [popup, setPopup] = useState({ open: false, title: '', content: null });
+  const [needs, setNeeds] = useState({ need_mask: true, need_sunscreen: true, need_umbrella: false });
+  const [hourlyTemperature, setHourlyTemperature] = useState([]);
+
+  const onPopup = (title, content) => {
+    setPopup({ open: true, title, content });
+  };
 
   useEffect(() => {
-    fetch('/data/weatherData.json')
-      .then(res => res.json())
-      .then(setData);
+    /* 백엔드 연동용 코드 
+    Promise.all([
+      fetch('/api/current/dust').then(res => res.json()),
+      fetch('/data/미세먼지기준.json').then(res => res.json()),
+      fetch('/api/current/uv').then(res => res.json()),
+      fetch('/data/자외선기준.json').then(res => res.json()),
+      fetch('/data/공구템.json').then(res => res.json()),
+      fetch('/data/링크.json').then(res => res.json()),
+      fetch('/data/날씨별잡지식.json').then(res => res.json()),
+      fetch('/data/양산.json').then(res => res.json()),
+      fetch('/data/마스크설명.json').then(res => res.json()),
+      fetch('/data/대피소.json').then(res => res.json()),
+      fetch('/data/자외선차단제.json').then(res => res.json()),
+      fetch('/data/빗길.json').then(res => res.json()),
+      fetch('/data/미세먼지건강정보링크.json').then(res => res.json()),
+      fetch('/api/current/max-min-temp').then(res => res.json()),
+      fetch('/api/today/need').then(res => res.json()),
+      fetch('/api/current/temp').then(res => res.json()),
+    ]).then(([dust, dustStandard, uv, uvStandard, items, links, tips, parasol, maskDesc, shelter, sunscreen, roadData, pmLinks, tempInfo, needsInfo, nowTemp]) => {
+      const temperature = {
+        current: nowTemp.temperature,
+        max: tempInfo['maximum temperature'],
+        min: tempInfo['minimum temperature']
+      };
+
+      const minTemp = temperature.min;
+      const itemArray = items?.["공구템"] || [];
+      const 추천템 = itemArray.filter(item => {
+        const [min, max] = item.온도;
+        return minTemp >= min && minTemp <= max;
+      });
+
+      const weather = '맑음'; // API로 연동 시 대체
+      const tipList = tips?.['날씨별_이야기']?.[weather] || ['오늘 하루도 좋은 하루 되세요!'];
+      const randomTip = tipList[Math.floor(Math.random() * tipList.length)];
+
+      setTip(typeof randomTip === 'object' ? randomTip.내용 : randomTip);
+      setFilteredItems(추천템);
+      setAllItems(itemArray);
+      setNeeds(needsInfo); // ← 백엔드에서 받은 데이터로 설정
+      setData({ dust, dustStandard, uv, uvStandard, rain: {}, temperature, parasol, links, shelter, sunscreen, roadData, maskDesc, pmLinks });
+    });
+    */
+
+    // 임시 데이터 시작 (백엔드 연동 시 삭제)
+    Promise.all([
+      fetch('/data/미세먼지.json').then(res => res.json()),
+      fetch('/data/미세먼지기준.json').then(res => res.json()),
+      fetch('/data/자외선지수.json').then(res => res.json()),
+      fetch('/data/자외선기준.json').then(res => res.json()),
+      fetch('/data/공구템.json').then(res => res.json()),
+      fetch('/data/링크.json').then(res => res.json()),
+      fetch('/data/날씨별잡지식.json').then(res => res.json()),
+      fetch('/data/양산.json').then(res => res.json()),
+      fetch('/data/마스크설명.json').then(res => res.json()),
+      fetch('/data/대피소.json').then(res => res.json()),
+      fetch('/data/자외선차단제.json').then(res => res.json()),
+      fetch('/data/빗길.json').then(res => res.json()),
+      fetch('/data/미세먼지건강정보링크.json').then(res => res.json()),
+    ]).then(([fetchedDust, fetchedDustStandard, fetchedUvData, uvStandard, items, links, tips, parasol, maskDesc, shelter, sunscreen, rawroadData, pmLinks]) => {
+      const temperature = { current: 24.5, max: 28, min: 24 };
+      setHourlyTemperature([
+        { hour: '00시', temp: 10 },
+        { hour: '01시', temp: 9 },
+        { hour: '02시', temp: 9 },
+        { hour: '03시', temp: 8 },
+        { hour: '04시', temp: 7 },
+        { hour: '05시', temp: 7 },
+        { hour: '06시', temp: 8 },
+        { hour: '07시', temp: 10 },
+        { hour: '08시', temp: 12 },
+        { hour: '09시', temp: 14 },
+        { hour: '10시', temp: 16 },
+        { hour: '11시', temp: 18 },
+        { hour: '12시', temp: 20 },
+        { hour: '13시', temp: 21 },
+        { hour: '14시', temp: 22 },
+        { hour: '15시', temp: 23 },
+        { hour: '16시', temp: 23 },
+        { hour: '17시', temp: 22 },
+        { hour: '18시', temp: 20 },
+        { hour: '19시', temp: 18 },
+        { hour: '20시', temp: 16 },
+        { hour: '21시', temp: 14 },
+        { hour: '22시', temp: 13 },
+        { hour: '23시', temp: 11 },
+      ]);
+      const rain = { weather: '흐림', probability: '0%', amount: '0mm' };
+      const testDust = {
+        response: { body: { items: [{ itemCode: 'PM10', issueVal: '100' }, { itemCode: 'PM25', issueVal: '100' }] } }
+      };
+      const testUv = {
+        response: { body: { items: [{ uvIndex: '6' }] } }
+      };
+
+      const weather = rain.weather || '맑음';
+      const tipList = tips?.['날씨별_이야기']?.[weather] || ['오늘 하루도 좋은 하루 되세요!'];
+      const randomTip = tipList[Math.floor(Math.random() * tipList.length)];
+
+      const minTemp = temperature.min;
+      const itemArray = items?.["공구템"] || [];
+      const 추천템 = itemArray.filter(item => {
+        const [min, max] = item.온도;
+        return minTemp >= min && minTemp <= max;
+      });
+
+      const roadData = rawroadData["빗길"] || [];
+
+      setFilteredItems(추천템);
+      setAllItems(itemArray);
+      setTip(typeof randomTip === 'object' ? randomTip.내용 : randomTip);
+      setNeeds({ need_mask: true, need_sunscreen: true, need_umbrella: false });
+      setData({
+        dust: testDust,
+        dustStandard: fetchedDustStandard,
+        uv: testUv,
+        uvStandard,
+        rain,
+        temperature,
+        parasol,
+        links,
+        shelter,
+        sunscreen,
+        roadData,
+        maskDesc,
+        pmLinks
+      });
+    });
+    // ❌ 임시 데이터 끝
+
   }, []);
 
   if (!data) return <div>로딩 중...</div>;
 
   return (
     <div className="weather-wrapper">
-      {/* 상단 */}
       <div className="header">
-        <p className="location">📍 <strong>이화여대</strong></p>
-        <h1 className="temperature">{data.temperature}°</h1>
-        <div className="range">
-          최고: <span className="temp-bold">{data.temp_max}°</span>&nbsp;&nbsp;
-          최저: <span className="temp-bold">{data.temp_min}°</span>
+        <p className="location">📍이화여대</p>
+        <h1 className="temperature">{data.temperature.current}°</h1>
+        <p className="range">최고: {data.temperature.max}° / 최저: {data.temperature.min}°</p>
+      </div>
+
+      <div className="checklist-section">
+        <div className="title-bar">오늘의 준비물은?</div>
+        <Checklist needs={needs} />
+      </div>
+
+      <p className="tip">{tip}</p>
+
+      <div className="card-layout">
+        <div className="left-column">
+          <ItemCard itemList={filteredItems} allItems={allItems} onPopup={onPopup} />
+          <RainCard rain={data.rain} links={data.links} roadData={data.roadData} onPopup={onPopup} />
+          <UVCard uvData={data.uv} uvStandard={data.uvStandard} parasol={data.parasol} sunscreen={data.sunscreen} onPopup={onPopup} />
+        </div>
+        <div className="right-column">
+          <DustCard dustData={data.dust} standard={data.dustStandard} onPopup={onPopup} maskDesc={data.maskDesc} pmLinks={data.pmLinks} />
+          <ShuttleCard links={data.links} />
         </div>
       </div>
 
-      {/* 오늘의 준비물 */}
-      <div className="checklist-card">
-        <div className="checklist-title">오늘의 준비물은?</div>
-        <ul className="checklist-list">
-          {data.checklist.map((item, idx) => (
-            <li key={idx}>✔️ {item}</li>
-          ))}
-        </ul>
-      </div>
+      <WeatherToggles temperature={data.temperature} shelter={data.shelter} hourlyTemperature={hourlyTemperature} />
 
-      {/* 날씨 팁 */}
-      <p className="tip">{data.tip}</p>
-
-      {/* 카드 그리드 */}
-      <div className="card-grid">
-        {/* 공구템 */}
-        <div className="card item-card">
-          <div className="card-label">오늘의 공구템 추천</div>
-          <img src="/images/jacket.png" alt="공구템" className="card-image" />
-          <p className="card-text">{data.item}</p>
-        </div>
-
-        {/* 미세먼지 */}
-        <div className="card dust-card">
-          <div className="card-label">미세먼지 정보</div>
-
-          {/* PM10 */}
-          <div className="dust-block">
-            <img src="/images/pm10.png" alt="pm10" className="dust-img" />
-            <div className="dust-info">
-              <div className="dust-grade">{data.dust.pm10.grade}</div>
-              <div className="dust-value">{data.dust.pm10.value}</div>
-              <div className="unit">㎍/㎥</div>
-            </div>
-          </div>
-
-          {/* PM25 */}
-          <div className="dust-block">
-            <img src="/images/pm25.png" alt="pm25" className="dust-img" />
-            <div className="dust-info">
-              <div className="dust-grade">{data.dust.pm25.grade}</div>
-              <div className="dust-value">{data.dust.pm25.value}</div>
-              <div className="unit">㎍/㎥</div>
-            </div>
-          </div>
-
-          <p className="subtext">＞ 마스크 추천 제품 ＜</p>
-          <p className="subtext">＞ 미세먼지 건강 정보 ＜</p>
-        </div>
-
-        {/* 강수량 */}
-        <div className="card rain-card">
-          <div className="card-label">강수량</div>
-          <p>강수 확률 {data.rain.chance}%</p>
-          <p>강수량 <strong>{data.rain.amount}mm</strong></p>
-          <p className="subtext">＞ 교내 우산 대여 서비스 안내 ＜</p>
-          <p className="subtext">＞ 비오는 날 위험한 길은? ＜</p>
-        </div>
-
-        {/* 자외선 */}
-        <div className="card uv-card">
-          <div className="card-label">자외선</div>
-          <p className="emoji">{data.uv.emoji}</p>
-          <p>자외선 지수 {data.uv.index} - {data.uv.level}</p>
-          <p className="subtext">＞ 자외선 차단제 추천 제품 ＜</p>
-          <p className="subtext">＞ 양산 추천 제품 ＜</p>
-        </div>
-
-        {/* 셔틀 */}
-        <div className="card shuttle-card">
-          <div className="card-label">셔틀 운행 정보</div>
-          {data.shuttle.routes.map((route, idx) => (
-            <p key={idx}>{route}</p>
-          ))}
-          <p className="subtext">{data.shuttle.note}</p>
-          <p className="subtext underline">＞ {data.shuttle.link} ＜</p>
-        </div>
-      </div>
-
-      {/* 하단 버튼 */}
-      <div className="button-area">
-        <button>〉 오늘의 실시간 기온 예보 확인</button>
-        <button>〉 대피소 위치 확인하기</button>
-      </div>
+      {popup.open && (
+        <Popup title={popup.title} contents={popup.content} onClose={() => setPopup({ ...popup, open: false })} />
+      )}
     </div>
   );
 };

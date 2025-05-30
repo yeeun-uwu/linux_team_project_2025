@@ -1,0 +1,355 @@
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 9998;
+  backdrop-filter: blur(1px);
+}
+
+.popup-floating {
+  position: fixed;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #00462A;
+  border-radius: 20px;
+  padding: 20px;
+  width: 92vw;
+  max-width: 350px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.popup-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+}
+
+/* 닫기 버튼 */
+.popup-close-x {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.popup-content {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.popup-content li {
+  background-color: #CDE8B4;
+  padding: 14px;
+  margin-bottom: 10px;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #00462A;
+}
+
+/* 마스크 */
+.mask-accordion summary {
+  color: #FFFFFF;
+  font-weight: bold;
+  font-size: 17px;
+  cursor: pointer;
+  margin: 20px 0 10px;
+  outline: none;
+  list-style: none;
+}
+
+.mask-accordion {
+  margin-bottom: 16px;
+}
+
+.mask-accordion[open] summary::after {
+  content: "▲";
+  float: right;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.mask-accordion:not([open]) summary::after {
+  content: "▼";
+  float: right;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.mask-box {
+  background-color: #CDE8B4;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  color: #00462A;
+}
+
+.mask-item-title {
+  font-weight: bold;
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.mask-item-desc {
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/*미세먼지 정보 팝업*/
+.pm-popup-wrapper {
+  text-align: left;
+}
+
+.pm-section-label {
+  color: white;
+  font-weight: bold;
+  font-size: 17px;
+  margin-bottom: 10px;
+}
+
+.pm-standard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.pm-standard-card {
+  overflow: visible;
+  background-color: #CDE8B4;
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+  color: #00462A;
+}
+
+.pm-icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 6px;
+}
+
+.pm-icon-text {
+  font-size: 32px;
+  margin-bottom: 6px;
+}
+
+.pm-grade {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.pm-value {
+  font-size: 13px;
+  margin-top: px;
+}
+
+.pm-link-button {
+  display: block;
+  background-color: white;
+  color: #00462A;
+  font-weight: bold;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 12px;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s;
+}
+
+.pm-link-button:hover {
+  background-color: #CDE8B4;
+}
+
+/*빗길 - 위험한 길*/
+.rain-road-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin: 8px 0;
+  background-color: #CDE8B4;
+  border-radius: 8px;
+}
+
+.road-name {
+  font-weight: bold;
+  color: #00462A;
+}
+
+.road-view-button {
+  background-color: #00462A;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+/*자외선*/
+.uv-popup-card {
+  background-color: #CDE8B4;
+  border-radius: 16px;
+  padding: 12px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  position: relative;
+}
+
+.uv-popup-img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 8px;
+  background-color: white;
+  flex-shrink: 0;
+}
+
+.uv-popup-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.uv-popup-info .title {
+  font-weight: bold;
+  font-size: 12.5px;
+  margin-bottom: 6px;
+}
+
+.uv-popup-info .price {
+  font-size: 12px;
+  color: #222;
+  text-align: left;
+}
+
+.uv-popup-button {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  background-color: white;
+  color: #00462A;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 12px;
+  text-decoration: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.uv-popup-rank {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: #00462A;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.brand {
+  font-size: 12px;
+  color: #666;
+  text-align: left;
+}
+
+.bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: auto;
+}
+
+.bottom-row .price {
+  text-align: left;
+  align-self: flex-end;
+}
+
+/*공구템*/
+.item-popup-wrapper {
+  padding: 16px;
+}
+
+.item-section-title {
+  font-size: 18px;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.item-subtitle {
+  font-size: 11px;
+  color: #dddddd;
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.item-popup-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.item-popup-block {
+  background-color: #CDE8B4;
+  border-radius: 18px;
+  padding: 12px 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.item-popup-img {
+  width: 100%;
+  height: auto;
+  max-height: 80px;
+  object-fit: contain;
+  margin-bottom: 8px;
+}
+
+.item-popup-label {
+  font-weight: bold;
+  font-size: 13px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.item-popup-temp {
+  font-size: 12px;
+  margin-bottom: 2px;
+}
+
+.item-popup-thick {
+  font-size: 11px;
+  opacity: 0.9;
+  white-space: pre-line;
+}
+
+@media (max-width: 480px) {
+  .card-layout {
+    flex-direction: column;
+  }
+}
