@@ -38,16 +38,24 @@ def fetch_indices():
 
     # 요청 보내기
     response = requests.get(base_url, params=params)
-    data = response.json()
-    items = data["response"]["body"]["items"]["item"]
-    items.append({"updateTime" : time})
 
-    # 응답 상태 확인
     if response.status_code == 200:
-        with open(BASE_DIR+"/data/indices.json", "w", encoding="utf-8") as f:
-            json.dump(items, f, ensure_ascii=False, indent=2)
-        logger.info(f"{time} 시각의 자외선지수 예보 저장 완료")
-        return items
+        try:
+            data = response.json()
+            items = data.get("response", {}).get("body", {}).get("items", {}).get("item", [])
+            items.append({"updateTime": now.strftime("%Y%m%d%H")})  # 현재 시간 추가
+
+            with open(BASE_DIR + "/data/indices.json", "w", encoding="utf-8") as f:
+                json.dump(items, f, ensure_ascii=False, indent=2)
+
+            logger.info(f"{time} 시각의 자외선지수 예보 저장 완료")
+            return items
+
+        except json.JSONDecodeError as e:
+            logger.error(f"JSON 파싱 실패: {e}")
+            logger.error(f"응답 내용: {response.text}")
+            return None
+
     else:
-        logger.error(f"오류 발생: {response.status_code}")
+        logger.error(f"오류 발생: {response.status_code} - {response.text}")
         return None

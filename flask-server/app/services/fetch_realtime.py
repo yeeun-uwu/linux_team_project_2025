@@ -42,15 +42,14 @@ def fetch_realtime():
 
     # 요청 보내기
     response = requests.get(base_url, params=params)
-    data = response.json()
-    items  = data["response"]["body"]["items"]
 
-    # 응답 상태 확인
     if response.status_code == 200:
+        data = response.json()
+        items = data["response"]["body"]["items"]
+
         with open(BASE_DIR+"/data/realtime.json", "w", encoding="utf-8") as f:
             json.dump(items, f, ensure_ascii= False, indent=2)
-        
-        logger.info(f"{date} {hour} 초단기실황 저장 완료")
 
+        logger.info(f"{date} {hour} 초단기실황 저장 완료")
     else:
-        logger.error(f"오류 발생: {response.status_code}")
+        logger.error(f"오류 발생: {response.status_code} - {response.text}")

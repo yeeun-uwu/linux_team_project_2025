@@ -39,17 +39,24 @@ def fetch_forecast():
 
     # 요청 보내기
     response = requests.get(base_url, params=params)
-    data = response.json()
-    items  = data["response"]["body"]["items"]["item"]
-    daily = [a for a in items if a["fcstDate"] == now.strftime("%Y%m%d")] 
 
-    # 응답 상태 확인
     if response.status_code == 200:
-        with open(BASE_DIR+"/data/forecast.json", "w", encoding="utf-8") as f:
-            json.dump(daily, f, ensure_ascii= False, indent=2)
-        
-        logger.info(f"{time} 23시 단기예보 저장 완료")
-        return True
+        try:
+            data = response.json()
+            items = data.get("response", {}).get("body", {}).get("items", {}).get("item", [])
+            daily = [a for a in items if a.get("fcstDate") == now.strftime("%Y%m%d")]
+
+            with open(os.path.join(BASE_DIR, "data/forecast.json"), "w", encoding="utf-8") as f:
+                json.dump(daily, f, ensure_ascii=False, indent=2)
+
+            logger.info(f"{time} 23시 단기예보 저장 완료")
+            return True
+
+        except json.JSONDecodeError as e:
+            logger.error(f"JSON 파싱 실패: {e}")
+            logger.error(f"응답 내용: {response.text}")
+            return False
+
     else:
-        logger.error(f"오류 발생: {response.status_code}")
+        logger.error(f"오류 발생: {response.status_code} - {response.text}")
         return False
