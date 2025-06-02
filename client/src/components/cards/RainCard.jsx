@@ -25,7 +25,7 @@ const RainCard = ({ rain, links, roadData, onPopup }) => {
         <p
           className="subtext clickable"
           onClick={() => {
-            const roads = roadData;
+            const roads = roadData?.["빗길"];
 
             if (!roads || roads.length === 0) {
               onPopup("비오는 날 위험한 길은?", "등록된 정보가 없습니다.");
