@@ -23,7 +23,7 @@ const Weather = () => {
   };
 
   useEffect(() => {
-    
+
     Promise.all([
       fetch('/api/current/dust').then(res => res.json()),
       fetch('/data/미세먼지기준.json').then(res => res.json()),
@@ -48,9 +48,9 @@ const Weather = () => {
       setHourlyTemperature(hourlytemp.body.items[0].forecast.map(item => ({ hour: item.hour, temp: item.temp })));
 
       const temperature = {
-          current: nowTemp.body.items[0].temperature,
-          max: tempInfo.body.items[1].Value,
-          min: tempInfo.body.items[0].Value
+        current: nowTemp.body.items[0].temperature,
+        max: tempInfo.body.items[1].Value,
+        min: tempInfo.body.items[0].Value
       };
 
       const minTemp = temperature.min;
@@ -70,7 +70,7 @@ const Weather = () => {
       setNeeds(needsInfo.body.items[0]); // ← 백엔드에서 받은 데이터로 설정
       setData({ dust, dustStandard, uv, uvStandard, nowRain, temperature, parasol, links, shelter, sunscreen, roadData, maskDesc, pmLinks });
     });
-    
+
     /*
     // 임시 데이터 시작 (백엔드 연동 시 삭제)
     Promise.all([
@@ -141,19 +141,19 @@ const Weather = () => {
 
       <p className="tip">{tip}</p>
 
-      <div className="card-layout">
-        <div className="left-column">
+      <div className="card-wrapper">
+        <div className="card-column left">
           <ItemCard itemList={filteredItems} allItems={allItems} onPopup={onPopup} />
           <RainCard rain={data.nowRain} links={data.links} roadData={data.roadData} onPopup={onPopup} />
           <UVCard uvData={data.uv} uvStandard={data.uvStandard} parasol={data.parasol} sunscreen={data.sunscreen} onPopup={onPopup} />
         </div>
-        <div className="right-column">
+        <div className="card-column right">
           <DustCard dustData={data.dust} standard={data.dustStandard} onPopup={onPopup} maskDesc={data.maskDesc} pmLinks={data.pmLinks} />
           <ShuttleCard links={data.links} />
         </div>
-      </div>
 
-      <WeatherToggles temperature={data.temperature} shelter={data.shelter} hourlyTemperature={hourlyTemperature} />
+        <WeatherToggles temperature={data.temperature} shelter={data.shelter} hourlyTemperature={hourlyTemperature} />
+      </div>
 
       {popup.open && (
         <Popup title={popup.title} contents={popup.content} onClose={() => setPopup({ ...popup, open: false })} />
