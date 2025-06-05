@@ -40,17 +40,25 @@ def fetch_air_quality():
 
     # 요청 보내기
     response = requests.get(base_url, params=params)
-    data = response.json()
-    items  = data["response"]["body"]
-
-    # 응답 상태 확인
     if response.status_code == 200:
-        #print(ans)
-        with open(BASE_DIR+"/data/air_quality.json", "w", encoding="utf-8") as f:
-            json.dump(items, f, ensure_ascii= False, indent=2)
-        
-        logger.info(f"{today} 에어코리아 측정소별 실시간 측정정보 저장 완료")
-        return items
+            try:
+                data = response.json()
+                items = data.get("response", {}).get("body", None)
+                if items is None:
+                    logger.error(f"API 응답에 'body' 데이터가 없습니다: {data}")
+                    return None
+
+                with open(os.path.join(BASE_DIR, "data/air_quality.json"), "w", encoding="utf-8") as f:
+                    json.dump(items, f, ensure_ascii=False, indent=2)
+
+                logger.info(f"{today} 에어코리아 측정소별 실시간 측정정보 저장 완료")
+                return items
+
+            except json.JSONDecodeError as e:
+                logger.error(f"JSON 파싱 실패: {e}")
+                logger.error(f"응답 내용: {response.text}")
+                return None
+
     else:
-        logger.error(f"오류 발생: {response.status_code}")
+        logger.error(f"오류 발생: {response.status_code} - {response.text}")
         return None

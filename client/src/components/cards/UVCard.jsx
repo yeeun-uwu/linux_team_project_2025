@@ -23,7 +23,10 @@ const getUVGradeFromStandard = (index, 기준) => {
 
 // UVCard 컴포넌트: 자외선 정보, 차단제/양산 추천 버튼 및 팝업 연동 포함
 const UVCard = ({ uvData, uvStandard, parasol, onPopup, sunscreen }) => {
-  const hasData = uvData?.response?.body?.items?.length && uvStandard?.기준?.['자외선 지수'];
+  console.log("uvData 전체 구조:", JSON.stringify(uvData, null, 2));
+  console.log("uvStandard 전체 구조:", JSON.stringify(uvStandard, null, 2));
+
+  const hasData = uvData?.body?.items?.length && uvStandard?.기준?.['자외선 지수'];
 
   return (
     <div className="card-container">
@@ -34,8 +37,8 @@ const UVCard = ({ uvData, uvStandard, parasol, onPopup, sunscreen }) => {
         <div className="card uv-card square-card">자외선 데이터를 불러올 수 없습니다.</div>
       ) : (
         (() => {
-          const item = uvData.response.body.items[0];
-          const index = parseInt(item.uvIndex);
+          const item = uvData.body.items[0];
+          const index = parseInt(item.Value); 
           const level = getUVGradeFromStandard(index, uvStandard);
 
           return (

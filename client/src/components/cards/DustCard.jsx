@@ -36,14 +36,14 @@ function getBarPosition(value) {
 
 // DustCard 컴포넌트 본체
 const DustCard = ({ dustData, standard, onPopup, maskDesc, pmLinks }) => {
-  const items = dustData?.response?.body?.items;
+  const items = dustData.body.items;
   if (!items || items.length === 0) {
     return <div className="card">미세먼지 데이터를 불러올 수 없습니다.</div>;
   }
 
   // PM10, PM2.5 항목 추출
   const pm10Item = items.find(i => i.itemCode === 'PM10');
-  const pm25Item = items.find(i => i.itemCode === 'PM25' || i.itemCode === 'PM2.5');
+  const pm25Item = items.find(i => i.itemCode === 'PM25');
 
   const pm10 = parseInt(pm10Item?.issueVal ?? '0');
   const pm25 = parseInt(pm25Item?.issueVal ?? '0');

@@ -8,7 +8,7 @@ from app.scheduler.jobs import (
 def init_scheduler():
     scheduler = BackgroundScheduler()
 
-    # 작업 등록 (매일 자정, 아침 6시, 12시, 18시에 실행 등)
+    # 작업 등록
     scheduler.add_job(job_fetch_air_quality, 'cron', minute=0)
     scheduler.add_job(job_fetch_forecast, 'cron', hour=0, minute=0)
     scheduler.add_job(job_fetch_indices, 'cron', hour=0, minute=30)

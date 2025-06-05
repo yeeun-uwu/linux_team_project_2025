@@ -1,23 +1,23 @@
 .weather-toggle-section {
-  margin-top: 20px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  align-items: center;
-  font-family: 'Jua', sans-serif;
-  max-width: 350px;
+  align-items: flex-start;
+  width: 100%;
+  margin-top: 20px;
+  margin-left: 0;
+  gap: 10px;
 }
 
 .toggle-block {
   width: 100%;
+  margin-bottom: 14px;
 }
 
 .toggle-header {
   background-color: #00462A;
   color: white;
   font-size: 14px;
-  height: 30px;
-  width: 350px;
+  height: 35px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -26,6 +26,8 @@
   cursor: pointer;
   font-family: 'Jua', sans-serif;
   justify-content: flex-start;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .toggle-header .arrow {
@@ -38,10 +40,10 @@
 }
 
 .toggle-content {
-  background-color: #BBDDA0;
+  background-color: #CDE8B4;
   border-radius: 18px;
-  margin-top: 0;
-  width: 350px;
+  margin-top: 6px;
+  width: 100%;
   padding: 12px;
   box-sizing: border-box;
 }
@@ -63,4 +65,10 @@
   padding-left: 10px;
   font-size: 13px;
   line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .weather-toggle-section {
+    grid-template-columns: 1fr;
+  }
 }
